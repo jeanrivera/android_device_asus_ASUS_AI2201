@@ -40,9 +40,3 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
-    
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.taro \
-    libgptutils \
-    libz \
-    libcutils
