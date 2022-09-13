@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_ASUS_AI2201.mk
+    $(LOCAL_DIR)/twrp_AI2201.mk
 
 COMMON_LUNCH_CHOICES := \
-    omni_ASUS_AI2201-user \
-    omni_ASUS_AI2201-userdebug \
-    omni_ASUS_AI2201-eng
+    twrp_AI2201-user \
+    twrp_AI2201-userdebug \
+    twrp_AI2201-eng
