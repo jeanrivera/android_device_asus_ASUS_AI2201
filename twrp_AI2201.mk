@@ -12,8 +12,11 @@ $(call inherit-product-if-exists, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
-# Inherit from ASUS_AI2201 device
+# Inherit from AI2201 device
 $(call inherit-product, device/asus/AI2201/device.mk)
+
+# Include GSI
+$(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
