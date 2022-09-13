@@ -1,0 +1,11 @@
+# System.prop
+
+# ro.product.board=
+ro.board.platform=taro
+vendor.gatekeeper.disable_spu=true
+security.perf_harden=1
+persist.vold.ecryptfs_supported=true
+ro.adb.secure=0
+ro.debuggable=1
+ro.boot.avb_version=2.0
+ro.boot.vbmeta.avb_version=2.0
