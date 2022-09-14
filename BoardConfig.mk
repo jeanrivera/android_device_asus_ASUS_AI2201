@@ -43,13 +43,17 @@ TARGET_COPY_OUT_PRODUCT := product
 # Vendor Boot Try
 BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_RAMDISK_USE_LZ4 := true
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE :=
+
 
 # A/B
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
     system \
-    vendor
+    vendor \
+    vendor_boot
 
 TW_INCLUDE_REPACKTOOLS := true
 
