@@ -58,7 +58,7 @@ AB_OTA_PARTITIONS += \
 TW_INCLUDE_REPACKTOOLS := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE := None
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom androidboot.selinux=permissive firmware_class.path=/vendor/firmware_mnt/image
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz-dtb
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/recovery.fstab
 TARGET_RECOVERY_INITRC := $(DEVICE_PATH)/recovery/root/system/etc/init/hw/init.rc
@@ -83,9 +83,9 @@ TW_USE_FSCRYPT_POLICY := 2
 
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-#BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
-#BOARD_USES_RECOVERY_AS_BOOT := true
-#TARGET_NO_RECOVERY := true
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+BOARD_USES_RECOVERY_AS_BOOT := true
+TARGET_NO_RECOVERY := true
 
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
