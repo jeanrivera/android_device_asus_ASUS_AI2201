@@ -2968,7 +2968,7 @@ vendor/lib64/vendor.qti.hardware.wifi.wifilearner@1.0.so
 vendor/lib64/vendor.qti.hardware.wigig.netperftuner@1.0.so
 
 # Misc
-system_ext/apex/com.android.vndk.v30.apex
+#system_ext/apex/com.android.vndk.v30.apex
 system_ext/apex/com.android.vndk.v31.apex
 -system_ext/app/AntHalService-Soong/AntHalService-Soong.apk
 -system_ext/app/BluetoothDsDaService/BluetoothDsDaService.apk
@@ -5262,7 +5262,7 @@ vendor/lib64/libqesdk_manager.so
 vendor/lib64/libqll.so
 vendor/lib64/libqll10.so
 vendor/lib64/libqllengine.so
-vendor/lib64/libQnnGpu.so
+#vendor/lib64/libQnnGpu.so
 vendor/lib64/libQnnHtp.so
 vendor/lib64/libQnnHtpPrepare.so
 vendor/lib64/libQnnHtpV69Stub.so
