@@ -172,12 +172,10 @@ jobs:
           Manifest: ${{ github.event.inputs.MANIFEST_BRANCH }}
           Device: ${{ github.event.inputs.DEVICE_NAME }}
           Target: recovery-${{ github.event.inputs.BUILD_TARGET }}.img
-    - name: LDCheck
+    - name: Run LDCheck
       run: |
-        git clone https://github.com/that1/ldcheck.git
-        cd ldcheck
-        chmod +x * && mv * /usr/bin
-        cd ${OUT}recovery/root
-        ldcheck -p system/lib64:vendor/lib64 -d system/bin/qseecomd
+        cd workspace/out/target/product/AI2201/recovery/root
+        python3 ldcheck -p system/lib64:vendor/lib64 -d system/bin/qseecomd
+      continue-on-error: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
