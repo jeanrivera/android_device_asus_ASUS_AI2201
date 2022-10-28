@@ -7,7 +7,7 @@
 LOCAL_PATH := device/$(PRODUCT_BRAND)/$(PRODUCT_DEVICE)
 
 # Inherit from OEM SOC-common
-$(call inherit-product, $(LOCAL_PATH)/Android.mk)
+$(call inherit-product, device/asus/AI2201/Android.mk)
 
 # A/B related packages
 PRODUCT_PACKAGES += update_engine \
