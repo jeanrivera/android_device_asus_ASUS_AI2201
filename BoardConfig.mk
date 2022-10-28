@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-DEVICE_PATH := device/$(PRODUCT_BRAND)/$(PRODUCT_DEVICE)
+DEVICE_PATH := device/asus/AI2201
 
 # Copy TWRP ramdisk files automatically
 TARGET_RECOVERY_DEVICE_DIRS := $(LOCAL_PATH)
