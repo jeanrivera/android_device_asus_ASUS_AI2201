@@ -7,8 +7,7 @@ LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),ASUS_AI2201)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
-
-include $(CLEAR_VARS)
+endif
 
 RELAX_USES_LIBRARY_CHECK := true
 
