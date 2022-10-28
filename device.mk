@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Local path for OEM device tree
-LOCAL_PATH := device/$(PRODUCT_BRAND)/$(PRODUCT_DEVICE)
+LOCAL_PATH := device/asus/AI2201
 
 # Inherit from OEM SOC-common
 $(call inherit-product, device/asus/AI2201/Android.mk)
