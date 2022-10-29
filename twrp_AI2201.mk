@@ -13,7 +13,10 @@ PRODUCT_MODEL := ROG Phone 6
 PRODUCT_MANUFACTURER := $(PRODUCT_BRAND)
 
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/twrp/config/common.mk)
+$(call inherit-product-if-exists, vendor/pb/config/common.mk)
+$(call inherit-product-if-exists, vendor/twrp/config/common.mk)
+$(call inherit-product-if-exists, vendor/shrp/config/common.mk)
+$(call inherit-product-if-exists, vendor/omni/config/common.mk)
 
 # Inherit from hardware-specific part of the product configuration
 $(call inherit-product, device/asus/AI2201/device.mk)
