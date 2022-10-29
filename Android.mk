@@ -9,8 +9,6 @@ ifeq ($(TARGET_DEVICE),ASUS_AI2201)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif
 
-RELAX_USES_LIBRARY_CHECK := true
-
 # A/B support
 AB_OTA_UPDATER := true
 
