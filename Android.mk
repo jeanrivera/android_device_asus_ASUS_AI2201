@@ -61,5 +61,5 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
 
 # Copy modules for depmod
-PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*.ko,$(LOCAL_PATH)/prebuilt/modules,$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1)
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*.ko,$(LOCAL_PATH)/prebuilt/modules/:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/lib/modules/1.1)
 
