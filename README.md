@@ -4,3 +4,10 @@
   - Data doesn't mount.
   - ADB Commands doesn't work.
   - Other features need more test.
+
+
+## Credits
+```
+- Most Flags and Fix are from here:
+  - https://github.com/CaptainThrowback/android_device_asus_sm84xx
+```
