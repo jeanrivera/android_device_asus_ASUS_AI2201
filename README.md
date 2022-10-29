@@ -8,6 +8,6 @@
 
 ## Credits
 ```
-- Most Flags and Fix are from here:
+Most Flags and Fix are from here:
   - https://github.com/CaptainThrowback/android_device_asus_sm84xx
 ```
