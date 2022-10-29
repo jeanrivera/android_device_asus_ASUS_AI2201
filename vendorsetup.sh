@@ -1,12 +1,9 @@
-#
 # Copyright (C) 2022 The Android Open Source Project
 # Copyright (C) 2022 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
-#
-#add_lunch_combo twrp_cannong-eng
 
-FDEVICE="cannong"
+FDEVICE="AI2201"
 #set -o xtrace
 
 fox_get_target_device() {
@@ -30,46 +27,32 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
         export LC_ALL="C"
 
 	# Maintaining Info
-	export OF_MAINTAINER=cd-Crypton,cd-Spidey
+	export OF_MAINTAINER=cd-Crypton
 	export FOX_VERSION=$(date +%y.%m.%d)
 
 	# Funtions
 	export FOX_REPLACE_BUSYBOX_PS=1
-	# Getprops
 	export FOX_REPLACE_TOOLBOX_GETPROP=1
-	# Tar Support
 	export FOX_USE_TAR_BINARY=1
-	# Sed Support
 	export FOX_USE_SED_BINARY=1
-	# Bash Support
 	export FOX_USE_BASH_SHELL=1
 	export FOX_ASH_IS_BASH=1
-	# GRep Command
 	export FOX_USE_GREP_BINARY=1
-	# Supports lzma and xz
 	export FOX_USE_XZ_UTILS=1
-	# Uses Nano editor
 	export FOX_USE_NANO_EDITOR=1
-	# Added phhusson's LPTool
 	export OF_ENABLE_LPTOOLS=1
-
-	# Removed LED Support
-	export OF_USE_GREEN_LED=0
 
 	# Display Settings
 	export OF_SCREEN_H=2340
 	export OF_STATUS_H=120
 	export OF_STATUS_INDENT_LEFT=150
 	export OF_STATUS_INDENT_RIGHT=20
-	# Disable Notch
 	export OF_HIDE_NOTCH=1
-	# Clock Position
 	export OF_CLOCK_POS=1
-	# Always Enable NavBar
 	export OF_ALLOW_DISABLE_NAVBAR=0
 
-	# Device Codename (Redmi Note 9T)
-	export TARGET_DEVICE_ALT="cannon,cannong"
+	# Device Codename (ROG Phone 6)
+	export TARGET_DEVICE_ALT="ASUS_AI2201"
 
 	# Partitions Handling
 	export FOX_RECOVERY_INSTALL_PARTITION="/dev/block/by-name/recovery"
@@ -77,39 +60,28 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 	export FOX_RECOVERY_BOOT_PARTITION="/dev/block/by-name/boot"
 
-	# MagiskBoot Support
-	export OF_FORCE_MAGISKBOOT_BOOT_PATCH_MIUI=1
-	# Prevent Forced-Encryption Patches
-	export OF_DONT_PATCH_ENCRYPTED_DEVICE=1
-	# Passive Decryption Support upon OTA
+	# Patch and Decryption
+        export OF_AB_DEVICE=1
 	export OF_OTA_RES_DECRYPT=1
-	# DM-Verity Support
 	export OF_FORCE_DISABLE_DM_VERITY=1
-	# On-the-Air Support
 	export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
 	export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
-	# Prevent Self-Restarting Process
 	export OF_NO_RELOAD_AFTER_DECRYPTION=1
+        export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
+
 	# Build Date and Time Override
 	export FOX_BUGGED_AOSP_ARB_WORKAROUND="1546300800"; # Tuesday, January 1, 2019 12:00:00 AM GMT+00:00
-	# Ignore Metada Mounting
+
+        # Other Stuffs
 	export OF_FBE_METADATA_MOUNT_IGNORE=1
-	# AVB2.0 Support
 	export OF_PATCH_AVB20=1
-	# Prevent Splash Screen Changing
 	export OF_NO_SPLASH_CHANGE=1
-	#  Disable Built-in Magisk
 	export FOX_DELETE_MAGISK_ADDON=0
-	# Magisk Zip (25.2)
-        export FOX_USE_SPECIFIC_MAGISK_ZIP="$PWD/device/xiaomi/cannon/recovery/root/orangefiles/Magisk.zip"
-	# Magisk Version
+        export FOX_USE_SPECIFIC_MAGISK_ZIP="$(LOCAL_PATH)/Magisk/Magisk-v25.2.zip"
 	export MAGISK_VER=25.2
-	# Magisk Boot Patch
 	export OF_USE_MAGISKBOOT=1
 	export OF_PATCH_VBMETA_FLAG=2
 	export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
-	# Decryption
-	export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
 	
 	# let's see what are our build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
