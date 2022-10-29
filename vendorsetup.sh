@@ -29,6 +29,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# Maintaining Info
 	export OF_MAINTAINER=cd-Crypton
 	export FOX_VERSION=$(date +%y.%m.%d)
+        export FOX_BUILD_TYPE="Unofficial-Alpha"
 
 	# Funtions
 	export FOX_REPLACE_BUSYBOX_PS=1
