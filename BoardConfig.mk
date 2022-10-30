@@ -159,54 +159,17 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
 # TWRP Debug Flags
-#TWRP_EVENT_LOGGING := true
 TARGET_USES_LOGD := true
 TWRP_INCLUDE_LOGCAT := true
 TARGET_RECOVERY_DEVICE_MODULES += debuggerd
 RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/debuggerd
 TARGET_RECOVERY_DEVICE_MODULES += strace
 RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/strace
-#TARGET_RECOVERY_DEVICE_MODULES += twrpdec
-#RECOVERY_BINARY_SOURCE_FILES += $(TARGET_RECOVERY_ROOT_OUT)/sbin/twrpdec
-
-#
-# For local builds only
-#
-# TWRP zip installer
-ifneq ($(wildcard bootable/recovery/installer/.),)
-    USE_RECOVERY_INSTALLER := true
-    RECOVERY_INSTALLER_PATH := bootable/recovery/installer
-endif
-
-# Custom TWRP Versioning
-ifneq ($(wildcard device/common/version-info/.),)
-    # Uncomment the below line to use custom device version
-    include device/common/version-info/custom_twrp_version.mk
-
-    # version prefix is optional - the default value is "LOCAL" if nothing is set in device tree
-    CUSTOM_TWRP_VERSION_PREFIX := Alpha
-
-    ifeq ($(CUSTOM_TWRP_VERSION),)
-        CUSTOM_TWRP_VERSION := $(shell date +%Y%m%d)-01
-    endif
-endif
-#
-# end local build flags
-#
 
 
 # TWRP specific build flags
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko asus_battery_charger_AI2202.ko ax88179_178a.ko dwc3-msm.ko focaltech_fts_3658u.ko leds-qpnp-vibrator-ldo.ko qcom-hv-haptics.ko qseecom-mod.ko qti_battery_charge_notify.ko qti_battery_charger.ko ssusb-redriver-nb7vpq904m.ko synaptics_dsx.ko texfat.ko tfs_linux.ko tntfs.ko usb_bam.ko usb_f_ccid.ko usb_f_cdev.ko usb_f_diag.ko usb_f_gsi.ko usb_f_qdss.ko"
 TW_NO_SCREEN_BLANK := true
 
-#
-# For local builds only
-#
-# Custom TWRP Versioning
-ifneq ($(wildcard device/common/version-info/.),)
-    # device version is optional - the default value is "0" if nothing is set in device tree
-    CUSTOM_TWRP_DEVICE_VERSION := 0
-endif
-#
-# end local build flags
-#
+# TWRP Version
+TW_DEVICE_VERSION := AI2201-Alpha
