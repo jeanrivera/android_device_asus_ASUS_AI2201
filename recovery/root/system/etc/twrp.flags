@@ -41,5 +41,5 @@
 /asuskey5		emmc	            /dev/block/bootdevice/by-name/asuskey5								flags=backup=1;subpartitionof=/sysconf
 /asuskey6		emmc	            /dev/block/bootdevice/by-name/asuskey6								flags=backup=1;subpartitionof=/sysconf
 
-# Removable storage
-/dev/block/sdh               /dev/block/sdh1           vfat         /usb-otg                                    flags=display="USB OTG";storage;wipeingui;removable
+# Removable             <device-1>              <device-0>                     <type>              <flags-display>
+/usb-otg                /dev/block/sdh          /dev/block/sdh1                 vfat               flags=display="USB OTG";storage;wipeingui;removable

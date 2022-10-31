@@ -34,19 +34,20 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-#<src>                 <type>               <mnt_point>          <mnt_flags and options>                                                                          <fs_mgr_flags>
+#<src>                 <mnt_point>              <type>          <mnt_flags and options>                                                                          <fs_mgr_flags>
 
 # Logical partitions
-/system                 ext4                  system              ro,barrier=1,discard                                                                            wait,slotselect,logical
-/product                ext4                  product             ro,barrier=1,discard                                                                            wait,slotselect,logical
-/vendor                 ext4                  vendor              ro,barrier=1,discard                                                                            wait,slotselect,logical
-/system_ext             ext4                  system_ext          ro,barrier=1,discard                                                                            wait,slotselect,logical
-/vendor_dlkm            ext4                  vendor_dlkm         ro,barrier=1,discard                                                                            wait,slotselect,logical
+/system                 system                   ext4            ro,barrier=1,discard                                                                            wait,slotselect,logical
+/product                product                  ext4            ro,barrier=1,discard                                                                            wait,slotselect,logical
+/vendor                 vendor                   ext4            ro,barrier=1,discard                                                                            wait,slotselect,logical
+/system_ext             system_ext               ext4            ro,barrier=1,discard                                                                            wait,slotselect,logical
+/vendor_dlkm            vendor_dlkm              ext4            ro,barrier=1,discard                                                                            wait,slotselect,logical
 
 # Userdata partition
-/data                   f2fs                  /dev/block/bootdevice/by-name/userdata    noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,inlinecrypt    wait,check,formattable,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,metadata_encryption=aes-256-xts:wrappedkey_v0,quota
-/metadata               ext4                  /dev/block/bootdevice/by-name/metadata    noatime,nosuid,nodev,discard                                                                    wait,check,formattable
-/misc                   emmc                  /dev/block/bootdevice/by-name/misc        defaults                                                                                        defaults
+/data                   /dev/block/bootdevice/by-name/userdata      f2fs                      noatime,nosuid,nodev,discard,reserve_root=32768,resgid=1065,fsync_mode=nobarrier,inlinecrypt    wait,check,formattable,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,metadata_encryption=aes-256-xts:wrappedkey_v0,quota
+/metadata               /dev/block/bootdevice/by-name/metadata      ext4                      noatime,nosuid,nodev,discard                                                                    wait,check,formattable
+/misc                   /dev/block/bootdevice/by-name/misc          emmc                      defaults                                                                                        defaults
 
-# Removable
-/dev/block/sdh               /dev/block/sdh1                      /usb-otg                       vfat                    flags=display="USB OTG";storage;wipeingui;removable
+
+# Removable             <device-1>              <device-0>                     <type>              <flags-display>
+#/usb-otg                /dev/block/sdh          /dev/block/sdh1                 vfat               flags=display="USB OTG";storage;wipeingui;removable
