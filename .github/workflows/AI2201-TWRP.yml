@@ -1,10 +1,10 @@
-name: ROG Phone 6 - Boot
+name: ROG Phone 6 - TWRP
 
 on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        description: 'MANIFEST_URL'
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
       MANIFEST_BRANCH:
@@ -14,21 +14,15 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/carlodeeCrypton/custom_recovery_tree_asus_AI2201'
+        default: 'https://github.com/cd-Crypton/custom_recovery_tree_asus_AI2201'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'asus-12'
+        default: 'Android-12'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
         default: 'device/asus/AI2201'
-      COMMON_TREE_URL:
-        description: 'COMMON_TREE_URL (if no common tree, leave blank)'
-        required: false
-      COMMON_PATH:
-        description: 'COMMON_PATH (if no common tree, leave blank)'
-        required: false
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
@@ -40,7 +34,7 @@ on:
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
-        default: 'boot'
+        default: 'recovery'
 
 jobs:
   build:
@@ -61,13 +55,16 @@ jobs:
         echo "Build Target: ${{ github.event.inputs.BUILD_TARGET }}.img"
         echo "::endgroup::"
  
-    # You might want to Checkout your repo first, but not mandatory
     - name: Check Out
       uses: actions/checkout@v3.1.0
-#     Cleanup The Actions Workspace Using Custom Composite Run Actions
+
     - name: Cleanup
       uses: rokibhasansagar/slimhub_actions@main
-      # That's it! Now use your normal steps
+
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 12
 
     - name: Prepare the environment
       run: |
@@ -76,22 +73,9 @@ jobs:
         sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev libncurses5 x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libncurses5 libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python3
 
     - name: Install OpenJDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '8'
-
-    - name: Setup SSH Keys
-      if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
-      uses: webfactory/ssh-agent@v0.5.4
-      with:
-          ssh-private-key: |
-              ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Set variables
       run: |
-        echo "::set-output name=date::$(date +%F)"
-      id: var
+        git clone https://github.com/cd-Spidey/Random.git ./opendjk
+        sudo bash opendjk/setup/packages/open_jdk.sh
       
     - name: Install repo
       run: |
@@ -104,9 +88,9 @@ jobs:
       run: |
         mkdir workspace
         cd workspace
-        echo "::set-output name=pwd::$(pwd)"
-        git config --global user.name "Captain Throwback"
-        git config --global user.email "captainthrowback@hotmail.com"
+        echo "workdir=$(pwd)" >> $GITHUB_OUTPUT
+        git config --global user.name "Carlo Dee"
+        git config --global user.email "carlodee.officail@gmail.com"
         repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
           
@@ -118,15 +102,7 @@ jobs:
     - name: Clone device tree
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
-      working-directory: ${{ steps.pwd.outputs.pwd }}
-
-    - name: Clone common tree
-      if: |
-        github.event.inputs.COMMON_TREE_URL != null
-        && github.event.inputs.COMMON_PATH != null
-      run: |
-        git clone ${{ github.event.inputs.COMMON_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.COMMON_PATH }}
-      working-directory: ${{ steps.pwd.outputs.pwd }}
+      working-directory: ${{ steps.pwd.outputs.workdir }}
 
     - name: Check Build Tree
       uses: haya14busa/action-cond@v1
@@ -138,44 +114,40 @@ jobs:
 
     - name: Sync Device Dependencies
       run: |
-        bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
+        bash ${GITHUB_WORKSPACE}/.github/workspace/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
         repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.pwd }}
       continue-on-error: true
-
-    - name: Set Swap Space
-      uses: pierotofy/set-swap-space@master
-      with:
-        swap-size-gb: 12
-
-    - name: Check Build Branch
-      if: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-12.1' }}
-      run: |
-        source build/envsetup.sh
-        repopick 5405 5540
-      working-directory: ${{ steps.pwd.outputs.pwd }}
 
     - name: Building recovery
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
-      working-directory: ${{ steps.pwd.outputs.pwd }}
+      working-directory: ${{ steps.pwd.outputs.workdir }}
+
+    - name: Set Properties # Output will be use in final name of recovery.
+      id: props
+      run: |
+        echo "date=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+
+    - name: Renaming into TWRP
+      run: |
+        cd out/target/product/${{ github.event.inputs.DEVICE_NAME }}
+        mv ${{ github.event.inputs.BUILD_TARGET }}.img ${{ github.event.inputs.MANIFEST_BRANCH }}-3.7.0-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.img
+      working-directory: ${{ steps.pwd.outputs.workdir }}
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
-        name: ROG Phone 6 (ASUS_AI2201) Alpha Build-${{ github.run_id }}
-        tag_name: rog6-ab-${{ github.run_id }}
+        name: Unofficial TWRP for ROG Phone 6 (ASUS_AI2201) - Build ${{ steps.props.outputs.date }}
+        tag_name: rog6-${{ github.run_id }}-v${{ steps.props.outputs.date }}
         body: |
-          Manifest: ${{ github.event.inputs.MANIFEST_BRANCH }}
-          Device: ${{ github.event.inputs.DEVICE_NAME }}
-          Target: recovery-${{ github.event.inputs.BUILD_TARGET }}.img
-    - name: Run LDCheck
-      run: |
-        cd workspace/out/target/product/AI2201/recovery/root
-        python3 ldcheck -p system/lib64:vendor/lib64 -d system/bin/qseecomd
+          ## TWRP v3.7.0_12.1-ASUS_AI2201-${{ steps.props.outputs.date }}
+          - To be edited.
+          - To be edited.
+          - To be edited.
       continue-on-error: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
