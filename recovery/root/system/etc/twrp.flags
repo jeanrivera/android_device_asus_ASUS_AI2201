@@ -1,10 +1,10 @@
 # mount point	fstype	device											device2				flags
 # Logical partitions
-/system_ext	    ext4	            system_ext															flags=display=System_EXT
-/vendor_dlkm    ext4	            vendor_dlkm															flags=display=Vendor_DLKM
+system_ext                      /system_ext	                                    ext4	            				flags=display=System_EXT
+vendor_dlkm	                    /vendor_dlkm                                    ext4	            				flags=display=Vendor_DLKM
 
 # Userdata/Metadata partitions
-/metadata	    ext4	            /dev/block/by-name/metadata													flags=display=Metadata
+/metadata                       /dev/block/by-name/metadata     	            ext4	            				flags=display=Metadata
 
 # Boot partitions
 /boot			emmc	            /dev/block/bootdevice/by-name/boot									flags=slotselect
@@ -40,6 +40,3 @@
 /asuskey4		emmc	            /dev/block/bootdevice/by-name/asuskey4								flags=backup=1;subpartitionof=/sysconf
 /asuskey5		emmc	            /dev/block/bootdevice/by-name/asuskey5								flags=backup=1;subpartitionof=/sysconf
 /asuskey6		emmc	            /dev/block/bootdevice/by-name/asuskey6								flags=backup=1;subpartitionof=/sysconf
-
-# Removable             <device-1>              <device-0>                     <type>              <flags-display>
-/usb-otg                /dev/block/sdh          /dev/block/sdh1                 vfat               flags=display="USB OTG";storage;wipeingui;removable
