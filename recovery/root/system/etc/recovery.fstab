@@ -19,4 +19,4 @@ vendor_dlkm                                             /vendor_dlkm           e
 
 
 # Removable storage
-/usb-otg		vfat	/dev/block/sdh1									/dev/block/sdh		flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
+/usbstorage		vfat	/dev/block/sdh1									/dev/block/sdh		flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
