@@ -78,7 +78,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_PATCH_AVB20=1
 	export OF_NO_SPLASH_CHANGE=1
 	export FOX_DELETE_MAGISK_ADDON=0
-        export FOX_USE_SPECIFIC_MAGISK_ZIP="$(LOCAL_PATH)/Magisk/Magisk-v25.2.zip"
+	export FOX_USE_SPECIFIC_MAGISK_ZIP="$HOME/device/asus/AI2201/Magisk/Magisk-v25.2.zip"
 	export MAGISK_VER=25.2
 	export OF_USE_MAGISKBOOT=1
 	export OF_PATCH_VBMETA_FLAG=2
