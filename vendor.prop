@@ -11,3 +11,6 @@ ro.crypto.volume.metadata.method=dm-default-key
 
 # Gatekeeper
 vendor.gatekeeper.disable_spu=true
+
+# USB Config
+vendor.usb.use_ffs_mtp=1
