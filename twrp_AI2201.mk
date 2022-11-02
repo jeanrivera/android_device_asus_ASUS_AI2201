@@ -34,8 +34,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 # Virtual A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
-RODUCT_GMS_CLIENTID_BASE := android-asus
-
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="ASUS_AI2201-user 12 SKQ1.220406.001 32.2810.2209.197-0 release-keys"
 
