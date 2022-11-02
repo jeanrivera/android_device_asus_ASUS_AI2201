@@ -48,4 +48,3 @@
 
 # Removable storage
 /usbstorage		vfat	/dev/block/sdh1			        /dev/block/sdh	                            flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
-/sdcard         vfat    /dev/block/mmcblk0p1                                                        nosuid,nodev                                               wait
