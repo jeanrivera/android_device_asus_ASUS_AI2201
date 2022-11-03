@@ -133,6 +133,7 @@ VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 BOARD_ROOT_EXTRA_FOLDERS := batinfo
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
 TARGET_VENDOR_PROP := $(DEVICE_PATH)/vendor.prop
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun.%d/file
 
 # TWRP specific build flags
 TARGET_RECOVERY_QCOM_RTC_FIX := true
