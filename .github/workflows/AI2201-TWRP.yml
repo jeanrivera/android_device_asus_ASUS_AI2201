@@ -10,7 +10,7 @@ on:
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'twrp-12.1'
+        default: 'And-12.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
@@ -141,8 +141,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
-        name: Unofficial TWRP for ROG Phone 6 (ASUS_AI2201) - Build ${{ steps.props.outputs.date }}
-        tag_name: rog6-${{ github.run_id }}-v${{ steps.props.outputs.date }}
+        name: Unofficial TWRP for ROG Phone 6 (ASUS_AI2201) - Build ${{ steps.props.outputs.date }} / ${{ github.run_id }}
+        tag_name: rog6-v${{ steps.props.outputs.date }}-${{ github.run_id }}
         body: |
           ## TWRP v3.7.0_12.1-ASUS_AI2201-${{ steps.props.outputs.date }}
           - To be edited.
