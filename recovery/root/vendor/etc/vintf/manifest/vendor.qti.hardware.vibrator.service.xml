@@ -1,0 +1,10 @@
+<!-- Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+-->
+
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.vibrator</name>
+        <version>2</version>
+        <fqname>IVibrator/default</fqname>
+    </hal>
+</manifest>

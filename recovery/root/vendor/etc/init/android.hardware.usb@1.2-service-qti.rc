@@ -1,0 +1,9 @@
+on boot
+    start usb-hal-1-2
+
+service usb-hal-1-2 /system/bin/android.hardware.usb@1.2-service-qti
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
