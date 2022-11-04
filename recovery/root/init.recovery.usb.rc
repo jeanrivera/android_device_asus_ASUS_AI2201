@@ -1,11 +1,12 @@
 on init
     setprop sys.usb.configfs 1
-
-on property:sys.usb.config=mass_storage,adb && property:sys.usb.configfs=1
-    start adbd
+  
+on boot && property:vendor.usb.use_gadget_hal=1
+   setprop sys.usb.configfs 2
 
 # MTP
 on property:sys.usb.config=mtp
+    stop adbd
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 0x18d1
     write /sys/class/android_usb/android0/idProduct 0x4ee2
