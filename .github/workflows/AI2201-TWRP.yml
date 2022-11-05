@@ -10,7 +10,7 @@ on:
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
-        default: 'And-12.1'
+        default: 'twrp-12.1'
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
@@ -70,21 +70,21 @@ jobs:
       run: |
         sudo apt update
         sudo apt -y upgrade
-        sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev libncurses5 x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libncurses5 libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python3
+        sudo apt -y install curl zip wget gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev libncurses5 x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libncurses5 libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python3
 
     - name: Install OpenJDK
       run: |
         git clone https://github.com/cd-Spidey/Random.git ./opendjk
         sudo bash opendjk/setup/packages/open_jdk.sh
       
-    - name: Install repo
+    - name: Install Git-Repo
       run: |
-        mkdir ~/bin
-        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        git config --global advice.detachedHead false
+        git clone https://android.googlesource.com/tools/repo -b v2.29 ~/bin
         chmod a+x ~/bin/repo
         sudo ln -sf ~/bin/repo /usr/bin/repo
       
-    - name: Initialize repo
+    - name: Initialize Git-Repo
       run: |
         mkdir workspace
         cd workspace
@@ -131,6 +131,21 @@ jobs:
       run: |
         echo "date=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
 
+    - name: Clone Template
+      run: |
+        git clone https://github.com/cd-Spidey/Random.git ./randomfiles
+
+    - name: Copy Files
+      run: |
+        cd out/target/product/${{ github.event.inputs.DEVICE_NAME }}
+        cp ${{ github.event.inputs.BUILD_TARGET }}.img ${GITHUB_WORKSPACE}/randomfiles/twrp_abtemplate
+      working-directory: ${{ steps.pwd.outputs.workdir }}
+
+    - name: Zip Files
+      run: |
+        cd randomfiles/twrp_abtemplate
+        zip -rv ${{ github.event.inputs.MANIFEST_BRANCH }}-3.7.0-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip magiskboot recovery.img META-INF/
+
     - name: Renaming into TWRP
       run: |
         cd out/target/product/${{ github.event.inputs.DEVICE_NAME }}
@@ -140,14 +155,15 @@ jobs:
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
-        files: workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
+        files: |
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
+          randomfiles/twrp_abtemplate/${{ github.event.inputs.MANIFEST_BRANCH }}-3.7.0-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip
         name: Unofficial TWRP for ROG Phone 6 (ASUS_AI2201) - Build ${{ steps.props.outputs.date }} / ${{ github.run_id }}
         tag_name: rog6-v${{ steps.props.outputs.date }}-${{ github.run_id }}
         body: |
           ## TWRP v3.7.0_12.1-ASUS_AI2201-${{ steps.props.outputs.date }}
           - To be edited.
           - To be edited.
-          - To be edited.
-      continue-on-error: true
+          - To be edited. 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
