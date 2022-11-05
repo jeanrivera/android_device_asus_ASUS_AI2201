@@ -161,7 +161,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.MANIFEST_BRANCH }}-3.7.0-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.img
           randomfiles/twrp_abtemplate/${{ github.event.inputs.MANIFEST_BRANCH }}-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip
         name: Unofficial PBRP for ROG Phone 6 (ASUS_AI2201) - Build ${{ steps.props.outputs.date }} / ${{ github.run_id }}
         tag_name: rog6-v${{ steps.props.outputs.date }}-${{ github.run_id }}
